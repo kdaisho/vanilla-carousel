@@ -21,13 +21,16 @@
         </div>
     </section>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prototype/1.7.3/prototype.js"></script>
-    <script src="index.js"></script>
-    <script src="Mh.Carousel.js"></script>
+    <!-- <script src="index.js"></script> -->
+    <!-- <script src="Mh.Carousel.js"></script> -->
+    <script src="my-carousel.js"></script>
     <script>
         // __init.add(function() {
-        var homeCarousel = new _Mh.Carousel({elem: $('home-carousel')});
-        console.log(homeCarousel);
+        // var homeCarousel = new _Mh.Carousel({elem: $('home-carousel')});
         // });
+
+        var homeCarousel = new Caro();
+        homeCarouel.init('home-carousel');
     </script>
 </body>
 </html>
