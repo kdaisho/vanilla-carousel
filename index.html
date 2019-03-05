@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <title>Carousel</title>
+</head>
+<body>
+    <section id="home-carousel" class="hmp container">
+        <div class="carousel-wrapper">
+            <button id="slide_prev" class="slide-btn slide-prev">PREV</button>
+            <button id="slide_next" class="slide-btn slide-next">NEXT</button>
+            <div id="carousel" class="carousel row row_collapse">
+                <div class="slide" style="left:0; background: url('https://via.placeholder.com/300/ff0');"></div>
+                <div class="slide" style="left:100%; background: url('https://via.placeholder.com/300/f00');"></div>
+                <div class="slide" style="left:200%; background: url('https://via.placeholder.com/300/f99');"></div>
+                <div class="slide" style="left:300%; background: url('https://via.placeholder.com/300/666');"></div>
+            </div>
+        </div>
+    </section>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prototype/1.7.3/prototype.js"></script>
+    <script src="index.js"></script>
+    <script src="Mh.Carousel.js"></script>
+    <script>
+        // __init.add(function() {
+        var homeCarousel = new _Mh.Carousel({elem: $('home-carousel')});
+        console.log(homeCarousel);
+        // });
+    </script>
+</body>
+</html>
+
