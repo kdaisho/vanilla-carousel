@@ -8,27 +8,30 @@
     <title>Vanilla Carousel</title>
 </head>
 <body>
-    <section id="home-carousel" class="hmp container">
+    <section id="home-carousel">
         <div class="carousel-wrapper">
             <button id="slide_prev" class="slide-btn slide-prev">PREV</button>
             <button id="slide_next" class="slide-btn slide-next">NEXT</button>
-            <div id="carousel" class="carousel row row_collapse">
-                <div class="slide" style="left:0; background: url('https://via.placeholder.com/300/ff0');"></div>
-                <div class="slide" style="left:100%; background: url('https://via.placeholder.com/300/f00');"></div>
-                <div class="slide" style="left:200%; background: url('https://via.placeholder.com/300/f99');"></div>
-                <div class="slide" style="left:300%; background: url('https://via.placeholder.com/300/666');"></div>
+            <div id="carousel" class="carousel">
+                <div class="slide" style="left:0; background: yellow;"></div>
+                <div class="slide" style="left:100%; background: pink;"></div>
+                <div class="slide" style="left:200%; background: red;"></div>
+                <div class="slide" style="left:300%; background: peru;"></div>
             </div>
         </div>
     </section>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prototype/1.7.3/prototype.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/prototype/1.7.3/prototype.js"></script>-->
     <!-- <script src="index.js"></script> -->
     <!-- <script src="Mh.Carousel.js"></script> -->
     <script src="my-carousel.js"></script>
     <script>
-        // __init.add(function() {
-        // var homeCarousel = new _Mh.Carousel({elem: $('home-carousel')});
-        // });
-        Caro.init('home-carousel');
+        Caro.init({
+        	home: 'home-carousel',
+        	container: 'carousel',
+        	slides: 'slide',
+        	prev: 'slide_prev',
+        	next: 'slide_next'
+        });
     </script>
 </body>
 </html>
