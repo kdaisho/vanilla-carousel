@@ -64,10 +64,6 @@ const Caro = (function () {
         let ind = (index + Math.floor(count / 2)) % count;
         let pos = Math.floor(-count / 2);
         for (let i = 0; i < slides.length; i++) {
-            /* slides[ind].setStyle({
-                left: pos + "00%",
-                transition: 'left 0s',
-            }); */
             slides[ind].style.left = pos + '00%';
             slides[ind].style.transition = 'left 0s';
             pos++;
@@ -83,8 +79,6 @@ const Caro = (function () {
         lock = setTimeout(function () {
         	const self = this;
             if (lock !== true) lock = false;
-            //console.log(self);
-        //}.bind(this), speed * 900);
         }, speed * 900);
 
         for (let i = 0; i < slides.length; i++) {
@@ -96,11 +90,6 @@ const Caro = (function () {
                 transition = 'left 0s';
             }
             pos -= dir;
-            //alert(pos);
-            /* slides[i].setStyle({
-                left: pos + "00%",
-                transition: transition,
-            }); */
             slides[i].style.left = pos + '00%';            
             slides[i].style.transition = transition;
         }
@@ -125,30 +114,16 @@ const Caro = (function () {
             let pos = (i + offset - index) % count;
             dest[i] = pos - gap;
             let e = slides[i];
-            //setStyle is prototype.js API
-            /* e.setStyle({
-                transition: 'left 0s',
-                left: pos + "00%"
-            }); */
             e.style.transition = 'left 0s';            
             e.style.left = pos + '00%';
         }
         
         const slide = function () {
             for (let i = 0; i < slides.length; i++) {
-                /* slides[i].setStyle({
-                    left: dest[i] + "00%",
-                    transition: 'left ' + speed + 's ease'
-                }); */
                 slides[i].style.left = dest[i] + '00%';
                 slides[i].style.transition = 'left ' + speed + 's ease';
             }
         }.bind(this);
-        
-        //is this doing something?
-        /* (function () {
-            slide.defer();
-        }).defer(); */
         
         (function () {
         	setTimeout(slide, 0);
@@ -180,25 +155,14 @@ const Caro = (function () {
     }
     
     function addNav () {
-    	//prototype.js api
-        /* const navCnt = new Element('div', {
-            'class': 'carousel-nav'
-        }); */
         const navCnt = document.createElement('div');
         navCnt.setAttribute('class', 'carousel-nav');
-		console.log(typeof navCnt);
         nav = [];
         for (let i = 0; i < count; i++) {
-            //nav[i] = new Element('span');
             nav[i] = document.createElement('span');
-
             let n = i;
-            //nav[i].addEventListener('click', goto.bind(this).curry(n));
-            //curry() is prototype.js api
-            //nav[i].addEventListener('click', goto.curry(n));
             nav[i].addEventListener('click', () => {
-            	console.log('num', n);
-            	goto(n);
+				goto(n);
             });
             navCnt.appendChild(nav[i]);
         }
@@ -209,22 +173,16 @@ const Caro = (function () {
     function updateNav () {
         for (let i = 0; i < count; i++) {
             if (i == index) {
-                //nav[i].addClassName('active');
                 nav[i].classList.add('active');
             }
             else {
-                //nav[i].removeClassName('active');
                 nav[i].classList.remove('active');
             }
         }
     }
     
     function onTouchStart (e) {
-    	//alert('touch start 1');
-    	//alert(swipe); //become 'pending' at second touch
         if (swipe || lock === true) return;
-        //alert('touch start 2', swipe);
-    	//alert(swipe);
         lock = true;
         xStart = xLast = e.changedTouches[0].pageX;
         yStart = e.changedTouches[0].pageY;
@@ -235,13 +193,10 @@ const Caro = (function () {
     }
 
     function onTouchMove (e) {
-        //alert('E1' + e);
         if (!swipe || swipe == 'canceled' || swipe == 'coasting') {
             return false;
         }
-        //alert('E2' + e);
         let curr = e.changedTouches[0];
-        //alert(curr);
         if (swipe == 'pending') {
             let dY = Math.abs(curr.pageY - yStart),
                 dX = Math.abs(curr.pageX - xStart);
@@ -256,7 +211,6 @@ const Caro = (function () {
             else {
                 return;
             }
-            //alert(swipe);//active
         }
         e.preventDefault();
         let t = new Date().valueOf(),
@@ -300,7 +254,7 @@ const Caro = (function () {
         let dist = Math.abs(g);
         let dir = dist ? g / dist : 0;
         let accel;
-        if (false && dist > 20) { // Gravity doesn't hold a candle to a simple ease-in,
+        if (false && dist > 20) {
             accel = dT / (2 * dir * Math.sqrt(dist));
             vel += accel;
             vel *= 0.6;
