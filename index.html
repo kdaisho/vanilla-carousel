@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="style.css">
-    <title>Vanilla Carousel</title>
+    <title>Vanilla JS Carousel</title>
 </head>
 <body>
     <section id="home-carousel">
@@ -13,19 +13,16 @@
             <button id="slide_prev" class="slide-btn slide-prev">PREV</button>
             <button id="slide_next" class="slide-btn slide-next">NEXT</button>
             <div id="carousel" class="carousel">
-                <div class="slide" style="left:0; background: yellow;"></div>
-                <div class="slide" style="left:100%; background: pink;"></div>
-                <div class="slide" style="left:200%; background: red;"></div>
-                <div class="slide" style="left:300%; background: peru;"></div>
+                <div class="slide" style="left: 0; background: yellow;"></div>
+                <div class="slide" style="left: 100%; background: pink;"></div>
+                <div class="slide" style="left: 200%; background: red;"></div>
+                <div class="slide" style="left: 300%; background: peru;"></div>
             </div>
         </div>
     </section>
-    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/prototype/1.7.3/prototype.js"></script>-->
-    <!-- <script src="index.js"></script> -->
-    <!-- <script src="Mh.Carousel.js"></script> -->
     <script src="my-carousel.js"></script>
     <script>
-        Caro.init({
+        Carousel.init({
         	home: 'home-carousel',
         	container: 'carousel',
         	slides: 'slide',

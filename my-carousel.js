@@ -1,4 +1,4 @@
-const Caro = (function () {
+const Carousel = (function () {
 	let elem = null;
 	const speed = .25;
 	const duration = 2;
@@ -56,7 +56,6 @@ const Caro = (function () {
     }
     
     function incdec (inc) {
-    	console.log(index, count, inc);
         index = (index + count + inc) % count;
     }
     
@@ -108,7 +107,7 @@ const Caro = (function () {
         }
         let dest = [];
         const gap = localIndex - index;
-        if (gap == 0) return;
+        if (gap === 0) return;
         const offset = gap > 0 ? count : -count;
         for (let i = 0; i < slides.length; i++) {
             let pos = (i + offset - index) % count;
@@ -172,7 +171,7 @@ const Caro = (function () {
 
     function updateNav () {
         for (let i = 0; i < count; i++) {
-            if (i == index) {
+            if (i === index) {
                 nav[i].classList.add('active');
             }
             else {
@@ -193,11 +192,11 @@ const Caro = (function () {
     }
 
     function onTouchMove (e) {
-        if (!swipe || swipe == 'canceled' || swipe == 'coasting') {
+        if (!swipe || swipe === 'canceled' || swipe === 'coasting') {
             return false;
         }
         let curr = e.changedTouches[0];
-        if (swipe == 'pending') {
+        if (swipe ==='pending') {
             let dY = Math.abs(curr.pageY - yStart),
                 dX = Math.abs(curr.pageX - xStart);
             if (dY > dX * 4 || dY > 24) {
@@ -225,14 +224,14 @@ const Caro = (function () {
     }
 
     function onTouchEnd (e) {
-        if (swipe == 'coasting') {
+        if (swipe === 'coasting') {
             return;
         }
-        if (swipe == 'canceled') {
+        if (swipe === 'canceled') {
             swipe = null;
             return;
         }
-        if (swipe == 'active') {
+        if (swipe === 'active') {
             swipe = 'coasting';
             setTimeout(inertia.bind(this), 0);
         }
