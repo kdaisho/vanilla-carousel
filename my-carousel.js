@@ -103,7 +103,7 @@ const Carousel = (function () {
             lock = setTimeout(function () {
                 lock = false;
                 goto(localIndex);
-            }.bind(this), speed * 1000);
+            }, speed * 1000);
         }
         let dest = [];
         const gap = localIndex - index;
@@ -122,7 +122,7 @@ const Carousel = (function () {
                 slides[i].style.left = dest[i] + '00%';
                 slides[i].style.transition = 'left ' + speed + 's ease';
             }
-        }.bind(this);
+        };
         
         (function () {
         	setTimeout(slide, 0);
@@ -132,7 +132,7 @@ const Carousel = (function () {
         lock = setTimeout(function () {
             recycle();
             lock = false;
-        }.bind(this), speed * 1000);
+        }, speed * 1000);
         index = localIndex;
         updateNav();
     }
@@ -140,7 +140,7 @@ const Carousel = (function () {
     function setTimer () {
         interval = setInterval(function () {
             slideLeft();
-        }.bind(this), duration * 1000);
+        }, duration * 1000);
     }
     
     function resetTimer () {
@@ -149,7 +149,7 @@ const Carousel = (function () {
             interval = null;
             setTimeout(function () {
                 setTimer();
-            }.bind(this), interactTimeout * 1000);
+            }, interactTimeout * 1000);
         }
     }
     
@@ -233,7 +233,7 @@ const Carousel = (function () {
         }
         if (swipe === 'active') {
             swipe = 'coasting';
-            setTimeout(inertia.bind(this), 0);
+            setTimeout(inertia, 0);
         }
     }
     
@@ -265,7 +265,7 @@ const Carousel = (function () {
         let pos = Math.floor(delta);
         container.style.left = pos + 'px';
         if (Math.abs(pos - gravity) > 2 || vel > 0.1) {
-            setTimeout(inertia.bind(this), 30);
+            setTimeout(inertia, 30);
         }
         else {
             if (gravity) {
