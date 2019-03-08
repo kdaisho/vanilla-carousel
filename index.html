@@ -9,8 +9,8 @@
 </head>
 <body>
     <section id="carousel" class="carousel">
-        <button id="prevButton" class="slide-btn slide-prev">PREV</button>
-        <button id="nextButton" class="slide-btn slide-next">NEXT</button>
+        <button id="prevButton" class="slide-btn is-prev"></button>
+        <button id="nextButton" class="slide-btn is-next"></button>
         <div id="container" class="container">
             <div class="slide">One</div>
             <div class="slide">Two</div>
@@ -21,11 +21,11 @@
     <script src="my-carousel.js"></script>
     <script>
         Carousel.init({
-        	home: 'home-carousel',
-        	container: 'carousel',
-        	slides: 'slide',
-        	prev: 'slide_prev',
-        	next: 'slide_next'
+        	carousel: 'carousel',
+        	container: 'container',
+        	slide: 'slide',
+        	prev: 'prevButton',
+        	next: 'nextButton'
         });
     </script>
 </body>

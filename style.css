@@ -4,6 +4,7 @@ body * {
 
 .carousel {
     padding: 20px 0 0;
+    position: relative;
     text-align: center;
     overflow-x: hidden;
     margin: 100px auto 0;
@@ -48,8 +49,30 @@ body * {
 }
 
 .slide-btn {
-    padding: 6px 12px;
-    background: #ccc;
+	border: none;
+    color: #fff;
+    text-shadow: 2px 2px 4px #222;
+    font-size: 30px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-75%);
+    z-index: 100;
+}
+
+.slide-btn.is-prev {
+	left: 1%;
+}
+
+.slide-btn.is-prev:after {
+	content: "<";
+}
+
+.slide-btn.is-next {
+	right: 1%;
+}
+
+.slide-btn.is-next:after {
+	content: ">";
 }
 
 .carousel-nav {
