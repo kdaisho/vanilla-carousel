@@ -8,16 +8,14 @@
     <title>Vanilla JS Carousel</title>
 </head>
 <body>
-    <section id="home-carousel">
-        <div class="carousel-wrapper">
-            <button id="slide_prev" class="slide-btn slide-prev">PREV</button>
-            <button id="slide_next" class="slide-btn slide-next">NEXT</button>
-            <div id="carousel" class="carousel">
-                <div class="slide" style="left: 0; background: yellow;"></div>
-                <div class="slide" style="left: 100%; background: pink;"></div>
-                <div class="slide" style="left: 200%; background: red;"></div>
-                <div class="slide" style="left: 300%; background: peru;"></div>
-            </div>
+    <section id="carousel" class="carousel">
+        <button id="prevButton" class="slide-btn slide-prev">PREV</button>
+        <button id="nextButton" class="slide-btn slide-next">NEXT</button>
+        <div id="container" class="container">
+            <div class="slide">One</div>
+            <div class="slide">Two</div>
+            <div class="slide">Three</div>
+            <div class="slide">Four</div>
         </div>
     </section>
     <script src="my-carousel.js"></script>

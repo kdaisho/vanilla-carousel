@@ -22,9 +22,9 @@ const Carousel = (function () {
 	let vel;
 
     function init (config) {
-    	home = document.getElementById(config.home);
+    	carousel = document.getElementById(config.carousel);
     	container = document.getElementById(config.container);
-		slides = document.getElementsByClassName(config.slides);
+		slides = document.getElementsByClassName(config.slide);
     	prevBtn = document.getElementById(config.prev);
     	nextBtn = document.getElementById(config.next);
     	count = slides.length;
@@ -112,12 +112,12 @@ const Carousel = (function () {
         for (let i = 0; i < slides.length; i++) {
             let pos = (i + offset - index) % count;
             dest[i] = pos - gap;
-            let e = slides[i];
-            e.style.transition = 'left 0s';            
-            e.style.left = pos + '00%';
+            let slide = slides[i];
+            slide.style.transition = 'left 0s';            
+            slide.style.left = pos + '00%';
         }
         
-        const slide = function () {
+        const move = function () {
             for (let i = 0; i < slides.length; i++) {
                 slides[i].style.left = dest[i] + '00%';
                 slides[i].style.transition = 'left ' + speed + 's ease';
@@ -125,7 +125,8 @@ const Carousel = (function () {
         };
         
         (function () {
-        	setTimeout(slide, 0);
+        	//By using setTimeout, execuion can defer until thread is free 
+        	setTimeout(move, 0);
         }());
         
         resetTimer();
@@ -165,7 +166,7 @@ const Carousel = (function () {
             });
             navCnt.appendChild(nav[i]);
         }
-        home.appendChild(navCnt);
+        carousel.appendChild(navCnt);
         updateNav();
     }
 
@@ -180,22 +181,22 @@ const Carousel = (function () {
         }
     }
     
-    function onTouchStart (e) {
+    function onTouchStart (event) {
         if (swipe || lock === true) return;
         lock = true;
-        xStart = xLast = e.changedTouches[0].pageX;
-        yStart = e.changedTouches[0].pageY;
+        xStart = xLast = event.changedTouches[0].pageX;
+        yStart = event.changedTouches[0].pageY;
         eStart = parseInt(container.style.left) || 0;
         tLast = new Date().valueOf();
         vel = 0;
         swipe = 'pending';
     }
 
-    function onTouchMove (e) {
+    function onTouchMove (event) {
         if (!swipe || swipe === 'canceled' || swipe === 'coasting') {
             return false;
         }
-        let curr = e.changedTouches[0];
+        let curr = event.changedTouches[0];
         if (swipe ==='pending') {
             let dY = Math.abs(curr.pageY - yStart),
                 dX = Math.abs(curr.pageX - xStart);
@@ -211,7 +212,7 @@ const Carousel = (function () {
                 return;
             }
         }
-        e.preventDefault();
+        event.preventDefault();
         let t = new Date().valueOf(),
             dT = t - tLast,
             localVel = dT ? (curr.pageX - xLast) / dT : 0;
@@ -223,7 +224,7 @@ const Carousel = (function () {
         container.style.left = eStart + delta + 'px';
     }
 
-    function onTouchEnd (e) {
+    function onTouchEnd () {
         if (swipe === 'coasting') {
             return;
         }
@@ -256,7 +257,7 @@ const Carousel = (function () {
         if (false && dist > 20) {
             accel = dT / (2 * dir * Math.sqrt(dist));
             vel += accel;
-            vel *= 0.6;
+            vel *= .6;
         }
         else {
             vel = g / 60;
