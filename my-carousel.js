@@ -1,9 +1,7 @@
 const Carousel = (function () {
-	let elem = null;
 	const speed = .25;
 	const duration = 2;
 	const interactTimeout = 4;
-	let id = null;
 	let container = null;
 	let slides = null;
 	let prevBtn = null;
@@ -12,7 +10,8 @@ const Carousel = (function () {
 	let count = null;
 	let lock = false;
 	let interval = null;
-	let nav = null;
+    let nav = null;
+    let delta;
 	let xStart;
 	let xLast;
 	let yStart;
@@ -28,37 +27,37 @@ const Carousel = (function () {
     	prevBtn = document.getElementById(config.prev);
     	nextBtn = document.getElementById(config.next);
     	count = slides.length;
-    	
+
     	nextBtn && nextBtn.addEventListener('click', () => {
     		slideLeft(index);
     		resetTimer();
     	}, false);
-    
+
 	    prevBtn && prevBtn.addEventListener('click', () => {
 	    	slideRight(index);
 	    	resetTimer();
 	    }, false);
-    
+
 		container.addEventListener('touchstart', onTouchStart);
 		container.addEventListener('touchmove', onTouchMove);
 		container.addEventListener('touchend', onTouchEnd);
-	
+
 		addNav();
 		setTimer();
     }
-	
+
 	function slideLeft () {
         cycle(1);
     }
-    
+
     function slideRight () {
         cycle(-1);
     }
-    
+
     function incdec (inc) {
         index = (index + count + inc) % count;
     }
-    
+
     function recycle () {
         let ind = (index + Math.floor(count / 2)) % count;
         let pos = Math.floor(-count / 2);
@@ -74,7 +73,7 @@ const Carousel = (function () {
         if (lock || document.hidden) {
             return;
         }
-        
+
         lock = setTimeout(function () {
         	const self = this;
             if (lock !== true) lock = false;
@@ -89,14 +88,14 @@ const Carousel = (function () {
                 transition = 'left 0s';
             }
             pos -= dir;
-            slides[i].style.left = pos + '00%';            
+            slides[i].style.left = pos + '00%';
             slides[i].style.transition = transition;
         }
         incdec(dir);
         index %= count;
         updateNav();
     }
-    
+
     function goto (localIndex) {
         if (lock) {
             clearTimeout(lock);
@@ -113,22 +112,22 @@ const Carousel = (function () {
             let pos = (i + offset - index) % count;
             dest[i] = pos - gap;
             let slide = slides[i];
-            slide.style.transition = 'left 0s';            
+            slide.style.transition = 'left 0s';
             slide.style.left = pos + '00%';
         }
-        
+
         const move = function () {
             for (let i = 0; i < slides.length; i++) {
                 slides[i].style.left = dest[i] + '00%';
                 slides[i].style.transition = 'left ' + speed + 's ease';
             }
         };
-        
+
         (function () {
-        	//By using setTimeout, execuion can defer until thread is free 
+        	//By using setTimeout, execuion can defer until thread is free
         	setTimeout(move, 0);
         }());
-        
+
         resetTimer();
         lock = setTimeout(function () {
             recycle();
@@ -137,13 +136,13 @@ const Carousel = (function () {
         index = localIndex;
         updateNav();
     }
-    
+
     function setTimer () {
         interval = setInterval(function () {
             slideLeft();
         }, duration * 1000);
     }
-    
+
     function resetTimer () {
         if (interval) {
             clearInterval(interval);
@@ -153,7 +152,7 @@ const Carousel = (function () {
             }, interactTimeout * 1000);
         }
     }
-    
+
     function addNav () {
         const navCnt = document.createElement('div');
         navCnt.setAttribute('class', 'carousel-nav');
@@ -180,7 +179,7 @@ const Carousel = (function () {
             }
         }
     }
-    
+
     function onTouchStart (event) {
         if (swipe || lock === true) return;
         lock = true;
@@ -237,7 +236,7 @@ const Carousel = (function () {
             setTimeout(inertia, 0);
         }
     }
-    
+
     function inertia () {
         let w = container.offsetWidth,
             gravity = 0,
@@ -281,9 +280,9 @@ const Carousel = (function () {
             lock = false;
         }
     }
-    
+
     return {
     	init
     };
-    
+
 }());
