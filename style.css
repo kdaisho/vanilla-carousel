@@ -68,6 +68,7 @@
     content: '⬅';
     display: block;
     rotate: 180deg;
+    transform-origin: center;
 }
 
 .carousel-nav {
