@@ -1,7 +1,7 @@
 class Carousel {
     carousel = null
     speed = 0.25
-    duration = 20
+    duration = 2
     interactTimeout = 4
     container = null
     slides = null
@@ -76,8 +76,8 @@ class Carousel {
 
     recycle() {
         let _index =
-            (this.index + Math.floor(this.slideCount / 2)) % this.slideCount
-        let pos = Math.floor(-this.slideCount / 2)
+            (this.index + Math.ceil(this.slideCount / 2)) % this.slideCount
+        let pos = -Math.floor(this.slideCount / 2)
 
         for (let _ = 0; _ < this.slideCount; _++) {
             this.slides[_index].style.left = `${pos * 100}%`
