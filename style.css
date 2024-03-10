@@ -16,6 +16,14 @@ body * {
     height: 300px;
 }
 
+.container:hover {
+    cursor: grab;
+}
+
+.container.grabbing {
+    cursor: grabbing;
+}
+
 .slide {
     display: flex;
     flex-flow: row nowrap;

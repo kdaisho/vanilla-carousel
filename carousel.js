@@ -11,6 +11,7 @@ class Carousel {
     slideCount = null
     lock = false
     interval = null
+    mouseDown = false
     delta
     xStart
     xLast
@@ -58,8 +59,8 @@ class Carousel {
             this.nextBtn.addEventListener(
                 'click',
                 () => {
-                    this.slideLeft(this.index)
-                    this.resetTimer()
+                    this.#slideLeft(this.index)
+                    this.#resetTimer()
                 },
                 false
             )
@@ -68,39 +69,54 @@ class Carousel {
             this.prevBtn.addEventListener(
                 'click',
                 () => {
-                    this.slideRight(this.index)
-                    this.resetTimer()
+                    this.#slideRight(this.index)
+                    this.#resetTimer()
                 },
                 false
             )
 
         this.container.addEventListener(
+            'mousedown',
+            this.#onMouseMoveStart.bind(this)
+        )
+
+        this.container.addEventListener(
+            'mouseup',
+            this.#onMouseMoveEnd.bind(this)
+        )
+
+        this.container.addEventListener(
+            'mousemove',
+            this.#onMouseMove.bind(this)
+        )
+
+        this.container.addEventListener(
             'touchstart',
-            this.onTouchStart.bind(this)
+            this.#onTouchStart.bind(this)
         )
         this.container.addEventListener(
             'touchmove',
-            this.onTouchMove.bind(this)
+            this.#onTouchMove.bind(this)
         )
-        this.container.addEventListener('touchend', this.onTouchEnd.bind(this))
+        this.container.addEventListener('touchend', this.#onTouchEnd.bind(this))
 
-        this.addNav()
-        this.setTimer()
+        this.#addNav()
+        this.#setTimer()
     }
 
-    slideLeft() {
-        this.cycle(1)
+    #slideLeft() {
+        this.#cycle(1)
     }
 
-    slideRight() {
-        this.cycle(-1)
+    #slideRight() {
+        this.#cycle(-1)
     }
 
-    updateIndex(val) {
+    #updateIndex(val) {
         this.index = (this.index + this.slideCount + val) % this.slideCount
     }
 
-    recycle() {
+    #recycle() {
         let _index =
             (this.index + Math.ceil(this.slideCount / 2)) % this.slideCount
         let pos = -Math.floor(this.slideCount / 2)
@@ -113,7 +129,7 @@ class Carousel {
         }
     }
 
-    cycle(dir) {
+    #cycle(dir) {
         if (this.lock || document.hidden) {
             return
         }
@@ -137,12 +153,12 @@ class Carousel {
             this.slides[i].style.transition = transition
         }
 
-        this.updateIndex(dir)
+        this.#updateIndex(dir)
         this.index %= this.slideCount
-        this.updateNav()
+        this.#updateNav()
     }
 
-    goto(localIndex) {
+    #goto(localIndex) {
         if (this.lock) {
             clearTimeout(this.lock)
             this.lock = setTimeout(() => {
@@ -182,21 +198,21 @@ class Carousel {
         this.updateNav()
     }
 
-    setTimer() {
+    #setTimer() {
         this.interval = setInterval(() => {
-            this.slideLeft()
+            this.#slideLeft()
         }, this.duration * 1000)
     }
 
-    resetTimer() {
+    #resetTimer() {
         if (this.interval) {
             clearInterval(this.interval)
             this.interval = null
-            setTimeout(() => this.setTimer(), this.interactTimeout * 1000)
+            setTimeout(() => this.#setTimer(), this.interactTimeout * 1000)
         }
     }
 
-    addNav() {
+    #addNav() {
         const navContainer = document.createElement('div')
         navContainer.classList.add('carousel-nav')
         this.nav = []
@@ -205,16 +221,16 @@ class Carousel {
             this.nav[i] = document.createElement('span')
             let n = i
             this.nav[i].addEventListener('click', () => {
-                this.goto(n)
+                this.#goto(n)
             })
             navContainer.appendChild(this.nav[i])
         }
 
         this.carousel.appendChild(navContainer)
-        this.updateNav()
+        this.#updateNav()
     }
 
-    updateNav() {
+    #updateNav() {
         for (let i = 0; i < this.slideCount; i++) {
             if (i === this.index) {
                 this.nav[i].classList.add('active')
@@ -224,28 +240,56 @@ class Carousel {
         }
     }
 
-    onTouchStart(event) {
+    // desktop
+    #onMouseMoveStart(event) {
+        this.mouseDown = true
+        this.container.classList.add('grabbing')
+        this.#dragStart(event)
+    }
+    #onMouseMove(event) {
+        event.preventDefault()
+        this.#drag(event)
+    }
+    #onMouseMoveEnd() {
+        this.mouseDown = false
+        this.container.classList.remove('grabbing')
+        this.#dragEnd()
+    }
+
+    // mobile
+    #onTouchStart(event) {
+        this.#dragStart(event.changedTouches[0])
+    }
+    #onTouchMove(event) {
+        event.preventDefault()
+        this.#drag(event.changedTouches[0])
+    }
+    #onTouchEnd() {
+        this.#dragEnd()
+    }
+
+    #dragStart(event) {
         if (this.swipe || this.lock === true) return
         this.lock = true
-        this.xStart = this.xLast = event.changedTouches[0].pageX
-        this.yStart = event.changedTouches[0].pageY
+        this.xStart = this.xLast = event.pageX
+        this.yStart = event.pageY
         this.eStart = parseInt(this.container.style.left) || 0
         this.tLast = Date.now()
         this.velocity = 0
         this.swipe = 'pending'
     }
 
-    onTouchMove(event) {
+    #drag(event) {
         if (
             !this.swipe ||
             (this.swipe === 'canceled') | (this.swipe === 'coasting')
         ) {
             return false
         }
-        let curr = event.changedTouches[0]
+
         if (this.swipe === 'pending') {
-            let dY = Math.abs(curr.pageY - this.yStart)
-            let dX = Math.abs(curr.pageX - this.xStart)
+            let dY = Math.abs(event.pageY - this.yStart)
+            let dX = Math.abs(event.pageX - this.xStart)
             if (dY > dX * 4 || dY > 24) {
                 this.swipe = 'canceled'
                 this.lock = false
@@ -256,19 +300,19 @@ class Carousel {
                 return
             }
         }
-        event.preventDefault()
+
         let t = Date.now()
         let dT = t - this.tLast
-        let localVelocity = dT ? (curr.pageX - this.xLast) / dT : 0
+        let localVelocity = dT ? (event.pageX - this.xLast) / dT : 0
         this.tLast = t
         this.velocity = (2 * localVelocity + this.velocity) / 3
         this.velocity = Math.min(this.velocity, 10)
-        this.xLast = curr.pageX
-        this.delta = curr.pageX - this.xStart
+        this.xLast = event.pageX
+        this.delta = event.pageX - this.xStart
         this.container.style.left = `${this.eStart + this.delta}px`
     }
 
-    onTouchEnd() {
+    #dragEnd() {
         if (this.swipe === 'coasting') {
             return
         }
@@ -278,11 +322,11 @@ class Carousel {
         }
         if (this.swipe === 'active') {
             this.swipe = 'coasting'
-            setTimeout(this.inertia.bind(this))
+            setTimeout(this.#inertia.bind(this))
         }
     }
 
-    inertia() {
+    #inertia() {
         let w = this.container.offsetWidth
         let gravity = 0
         let t = Date.now()
@@ -302,16 +346,16 @@ class Carousel {
         this.container.style.left = `${pos}px`
 
         if (Math.abs(pos - gravity) > 2 || this.velocity > 0.1) {
-            setTimeout(this.inertia.bind(this), 30)
+            setTimeout(this.#inertia.bind(this), 30)
         } else {
             if (gravity) {
                 let dir = gravity > 0 ? -1 : 1
-                this.updateIndex(dir)
-                this.updateNav()
-                this.recycle()
+                this.#updateIndex(dir)
+                this.#updateNav()
+                this.#recycle()
             }
             this.container.style.left = '0'
-            this.resetTimer()
+            this.#resetTimer()
             this.swipe = null
             this.lock = false
         }
