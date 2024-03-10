@@ -37,9 +37,16 @@ class Carousel {
         this.carousel = document.getElementById(config.carousel)
         this.container = document.getElementById(config.container)
         this.slides = document.querySelectorAll(`.${config.slide}`)
-        this.prevBtn = document.getElementById(config.prev)
-        this.nextBtn = document.getElementById(config.next)
         this.slideCount = this.slides.length
+
+        if (config.prev && config.next) {
+            this.prevBtn = document.createElement('button')
+            this.nextBtn = document.createElement('button')
+            this.prevBtn.classList.add('is-prev')
+            this.nextBtn.classList.add('is-next')
+            this.carousel.appendChild(this.prevBtn)
+            this.carousel.appendChild(this.nextBtn)
+        }
 
         if (this.slideCount > colors.length) {
             throw new Error(`Maximum number of slides is ${colors.length}`)
@@ -99,10 +106,12 @@ class Carousel {
             'touchstart',
             this.#onTouchStart.bind(this)
         )
+
         this.container.addEventListener(
             'touchmove',
             this.#onTouchMove.bind(this)
         )
+
         this.container.addEventListener('touchend', this.#onTouchEnd.bind(this))
 
         this.#addNav()
@@ -253,6 +262,7 @@ class Carousel {
     }
     #onMouseMove(event) {
         event.preventDefault()
+        if (!this.mouseDown) return
         this.#drag(event)
     }
     #onMouseMoveEnd() {
@@ -351,7 +361,7 @@ class Carousel {
         this.container.style.left = `${pos}px`
 
         if (Math.abs(pos - gravity) > 2 || this.velocity > 0.1) {
-            setTimeout(this.#inertia.bind(this), 30)
+            setTimeout(this.#inertia.bind(this), 0)
         } else {
             if (gravity) {
                 let dir = gravity > 0 ? -1 : 1

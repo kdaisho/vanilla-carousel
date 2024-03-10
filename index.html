@@ -9,14 +9,12 @@
     </head>
     <body>
         <section id="carousel" class="carousel">
-            <button id="prevButton" class="slide-btn is-prev"></button>
-            <button id="nextButton" class="slide-btn is-next"></button>
             <div id="container" class="container">
                 <div class="slide">One</div>
                 <div class="slide">Two</div>
                 <div class="slide">Three</div>
-                <div class="slide">Four</div>
-                <div class="slide">Five</div>
+                <!-- <div class="slide">Four</div>
+                <div class="slide">Five</div> -->
             </div>
         </section>
 
@@ -27,8 +25,8 @@
                     carousel: 'carousel',
                     container: 'container',
                     slide: 'slide',
-                    prev: 'prevButton',
-                    next: 'nextButton',
+                    prev: 'prev',
+                    next: 'next',
                 })
             } catch (error) {
                 alert(error)

@@ -1,5 +1,6 @@
-body * {
+:root {
     font-family: sans-serif;
+    --nav-height: 50px;
 }
 
 .carousel {
@@ -37,39 +38,49 @@ body * {
     width: 100%;
 }
 
-.slide-btn {
-    border: none;
+.carousel button {
+    background: none;
     color: #fff;
-    text-shadow: 2px 2px 4px #222;
+    border: none;
     font-size: 30px;
     position: absolute;
+    text-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
     top: 50%;
-    transform: translateY(-75%);
+    transform: translateY(calc(-50% - calc(var(--nav-height) / 2)));
     z-index: 100;
 }
 
-.slide-btn.is-prev {
+.carousel button:hover {
+    cursor: pointer;
+}
+
+.carousel button.is-prev {
     left: 1%;
 }
 
-.slide-btn.is-prev:after {
-    content: '<';
+.carousel button.is-prev:after {
+    content: '⬅';
 }
 
-.slide-btn.is-next {
+.carousel button.is-next {
     right: 1%;
 }
 
-.slide-btn.is-next:after {
-    content: '>';
+.carousel button.is-next:after {
+    content: '⬅';
+    display: block;
+    rotate: 180deg;
 }
 
 .carousel-nav {
+    align-items: center;
     display: flex;
+    gap: 5px;
     flex-flow: row nowrap;
-    width: 120px;
-    margin: 12px auto;
-    justify-content: space-between;
+    max-width: 200px;
+    height: var(--nav-height);
+    margin: 0 auto;
+    justify-content: center;
 }
 
 .carousel-nav span {
@@ -78,6 +89,10 @@ body * {
     border: 2px solid darkblue;
     height: 20px;
     width: 20px;
+}
+
+.carousel-nav span:hover {
+    cursor: pointer;
 }
 
 .carousel-nav span.active {
