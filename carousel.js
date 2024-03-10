@@ -21,12 +21,38 @@ class Carousel {
     velocity
 
     constructor(config) {
+        const colors = [
+            'orchid',
+            'lightSkyBlue',
+            'tomato',
+            'khaki',
+            'darkgray',
+            'lime',
+            'lightCoral',
+            'lightGreen',
+            'lightSalmon',
+        ]
+
         this.carousel = document.getElementById(config.carousel)
         this.container = document.getElementById(config.container)
         this.slides = document.querySelectorAll(`.${config.slide}`)
         this.prevBtn = document.getElementById(config.prev)
         this.nextBtn = document.getElementById(config.next)
         this.slideCount = this.slides.length
+
+        if (this.slideCount > colors.length) {
+            throw new Error(`Maximum number of slides is ${colors.length}`)
+        }
+
+        this.slides.forEach((slide, index) => {
+            if (index !== this.slideCount - 1) {
+                slide.style.left = `${index * 100}%`
+                slide.style.background = colors[index]
+            } else {
+                slide.style.left = `-100%`
+                slide.style.background = colors[index]
+            }
+        })
 
         this.nextBtn &&
             this.nextBtn.addEventListener(

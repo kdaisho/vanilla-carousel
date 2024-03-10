@@ -15,20 +15,24 @@
                 <div class="slide">One</div>
                 <div class="slide">Two</div>
                 <div class="slide">Three</div>
-                <!-- <div class="slide">Four</div> -->
-                <!-- <div class="slide">Five</div> -->
+                <div class="slide">Four</div>
+                <div class="slide">Five</div>
             </div>
         </section>
 
         <script src="./carousel.js"></script>
         <script>
-            new Carousel({
-                carousel: 'carousel',
-                container: 'container',
-                slide: 'slide',
-                prev: 'prevButton',
-                next: 'nextButton',
-            })
+            try {
+                new Carousel({
+                    carousel: 'carousel',
+                    container: 'container',
+                    slide: 'slide',
+                    prev: 'prevButton',
+                    next: 'nextButton',
+                })
+            } catch (error) {
+                alert(error)
+            }
         </script>
     </body>
 </html>

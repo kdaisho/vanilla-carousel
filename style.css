@@ -28,31 +28,6 @@ body * {
     width: 100%;
 }
 
-.slide:nth-child(1) {
-    background: orchid;
-    left: 0;
-}
-
-.slide:nth-child(2) {
-    background: lightSkyBlue;
-    left: 100%;
-}
-
-.slide:nth-child(3) {
-    background: tomato;
-    left: -100%;
-}
-
-.slide:nth-child(4) {
-    background: khaki;
-    left: -100%;
-}
-
-.slide:nth-child(5) {
-    background: darkgray;
-    left: -100%;
-}
-
 .slide-btn {
     border: none;
     color: #fff;
