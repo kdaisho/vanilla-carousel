@@ -4,17 +4,15 @@
 }
 
 .carousel {
-    padding: 20px 0 0;
+    margin: 100px auto 0;
+    overflow-x: hidden;
     position: relative;
     text-align: center;
-    overflow-x: hidden;
-    margin: 100px auto 0;
-    width: 100%;
 }
 
 .container {
-    position: relative;
     height: 300px;
+    position: relative;
 }
 
 .container:hover {
