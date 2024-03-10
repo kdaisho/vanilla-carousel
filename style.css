@@ -57,7 +57,7 @@
 }
 
 .carousel button.is-prev:after {
-    content: '⬅';
+    content: '←';
 }
 
 .carousel button.is-next {
@@ -65,10 +65,7 @@
 }
 
 .carousel button.is-next:after {
-    content: '⬅';
-    display: block;
-    rotate: 180deg;
-    transform-origin: center;
+    content: '→';
 }
 
 .carousel-nav {
