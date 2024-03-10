@@ -1,7 +1,7 @@
 class Carousel {
     carousel = null
     speed = 0.25
-    duration = 2
+    duration = 3
     interactTimeout = 4
     container = null
     slides = null
@@ -74,6 +74,11 @@ class Carousel {
                 },
                 false
             )
+
+        this.container.addEventListener(
+            'mouseleave',
+            this.#onMouseMoveEnd.bind(this)
+        )
 
         this.container.addEventListener(
             'mousedown',
@@ -163,7 +168,7 @@ class Carousel {
             clearTimeout(this.lock)
             this.lock = setTimeout(() => {
                 this.lock = false
-                this.goto(localIndex)
+                this.#goto(localIndex)
             }, this.speed * 1000)
         }
 
@@ -189,13 +194,13 @@ class Carousel {
 
         setTimeout(move)
 
-        this.resetTimer()
+        this.#resetTimer()
         this.lock = setTimeout(() => {
-            this.recycle()
+            this.#recycle()
             this.lock = false
         }, this.speed * 1000)
         this.index = localIndex
-        this.updateNav()
+        this.#updateNav()
     }
 
     #setTimer() {
