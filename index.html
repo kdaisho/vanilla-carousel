@@ -8,8 +8,8 @@
         <title>Vanilla JS Carousel</title>
     </head>
     <body>
-        <section id="carousel" class="carousel">
-            <div id="container" class="container">
+        <section id="carousel" class="carousel" aria-roledescription="carousel">
+            <div class="container">
                 <div class="slide">One</div>
                 <div class="slide">Two</div>
                 <div class="slide">Three</div>
@@ -18,19 +18,10 @@
             </div>
         </section>
 
-        <script src="./carousel.js"></script>
-        <script>
-            try {
-                new Carousel({
-                    carousel: 'carousel',
-                    container: 'container',
-                    slide: 'slide',
-                    prev: 'prev',
-                    next: 'next',
-                })
-            } catch (error) {
-                alert(error)
-            }
+        <script type="module">
+            import { Carousel } from './carousel.js'
+
+            new Carousel(document.getElementById('carousel'))
         </script>
     </body>
 </html>

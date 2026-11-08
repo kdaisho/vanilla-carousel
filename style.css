@@ -13,6 +13,7 @@
 .container {
     height: 300px;
     position: relative;
+    touch-action: pan-y; /* vertical scroll stays with the browser */
 }
 
 .container:hover {
@@ -33,10 +34,23 @@
     position: absolute;
     height: 300px;
     top: 0;
+    left: 0;
     width: 100%;
+    background: darkgray;
 }
 
-.carousel button {
+/* Demo colours */
+.slide:nth-child(9n + 1) { background: orchid; }
+.slide:nth-child(9n + 2) { background: lightSkyBlue; }
+.slide:nth-child(9n + 3) { background: tomato; }
+.slide:nth-child(9n + 4) { background: khaki; }
+.slide:nth-child(9n + 5) { background: darkgray; }
+.slide:nth-child(9n + 6) { background: lime; }
+.slide:nth-child(9n + 7) { background: lightCoral; }
+.slide:nth-child(9n + 8) { background: lightGreen; }
+.slide:nth-child(9n + 9) { background: lightSalmon; }
+
+.carousel > button {
     background: none;
     color: #fff;
     border: none;
@@ -48,23 +62,23 @@
     z-index: 100;
 }
 
-.carousel button:hover {
+.carousel > button:hover {
     cursor: pointer;
 }
 
-.carousel button.is-prev {
+.carousel > button.is-prev {
     left: 1%;
 }
 
-.carousel button.is-prev:after {
+.carousel > button.is-prev:after {
     content: '←';
 }
 
-.carousel button.is-next {
+.carousel > button.is-next {
     right: 1%;
 }
 
-.carousel button.is-next:after {
+.carousel > button.is-next:after {
     content: '→';
 }
 
@@ -79,18 +93,24 @@
     justify-content: center;
 }
 
-.carousel-nav span {
+.carousel-nav button {
     background: #fff;
+    padding: 0;
     border-radius: 50%;
     border: 2px solid darkblue;
     height: 20px;
     width: 20px;
 }
 
-.carousel-nav span:hover {
+.carousel-nav button:hover {
     cursor: pointer;
 }
 
-.carousel-nav span.active {
+.carousel-nav button.active {
     background: orange;
+}
+
+.carousel button:focus-visible {
+    outline: 2px solid darkblue;
+    outline-offset: 2px;
 }
